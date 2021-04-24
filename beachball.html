@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SVG.js</title>
+	<script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+	<script src="beachball.js" defer></script>
+</head>
+
+<body>
+	<div id="svg-area">
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td>
+					<span>Data format:</span>
+				</td>
+				<td>
+					<select id="data-format" name="option-S1">
+						<option value="a">-Sa: Aki and Richards convention</option>
+						<option value="c">-Sc: Global CMT convention</option>
+						<option value="m">-Sm: Seismic moment tensor</option>
+						<option value="p">-Sp: Partial data on both planes</option>
+						<option value="x">-Sx: Principal axis</option>
+					</select>
+				</td>
+			</tr>
+<!--
+			<tr>
+				<td>
+					<span>Plotting mode:</span>
+				</td>
+				<td>
+					<select id="plot-mode" name="option-S2">
+						<option value="m">-Sm|x: Full seismic moment tensor</option>
+						<option value="d">-Sd|y: The closest double couple</option>
+						<option value="z">-Sz|t: The deviatoric part</option>
+					</select>
+				</td>
+			</tr>
+-->
+			<tr>
+				<td>
+					<span>Parameters:</span>
+				</td>
+				<td>
+					<input type="text" id="params">
+					<br>
+					<span id="legend"></span>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<h2>External links</h2>
+	<ul>
+		<li>
+			<a href="https://www.generic-mapping-tools.org/" target="_blank" rel="noopener noreferrer">The Generic Mapping Tools</a>
+			<ul>
+				<li><a href="https://docs.generic-mapping-tools.org/6.0/supplements/seis/meca.html" target="_blank" rel="noopener noreferrer">Documentation &raquo; GMT Modules &raquo; meca</a></li>
+				<li><a href="https://github.com/GenericMappingTools/gmt/tree/6.0.0/src/seis" target="_blank" rel="noopener noreferrer">Source code (GitHub)</a></li>
+			</ul>
+		</li>
+		<li><a href="https://www.globalcmt.org/" target="_blank" rel="noopener noreferrer">Global CMT Web Page</a></li>
+	</ul>
+</body>
+</html>
