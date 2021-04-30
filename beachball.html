@@ -3,7 +3,11 @@
 <head>
 	<title>Beachball Viewer</title>
 	<script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
-	<script src="beachball.js" defer></script>
+	<script src="math_util.js"></script>
+	<script src="axis.js"></script>
+	<script src="nodal_plane.js"></script>
+	<script src="focal_mechanism.js"></script>
+	<script src="beachball.js"></script>
 	<style type="text/css">
 		body {
 			width: 25rem;
@@ -92,5 +96,78 @@
 			<p>This application is based on the Generic Mapping Tools and is published under GNU Lesser General Public License.  Please read XXX for details.</p>
 		</div>
 	</details>
+
+	<script>
+// color settings
+var penW = { stroke: "red", fill: "none" };
+var penL = penW;
+var penT = penW;
+var fillE = "lightyellow";
+var fillG = "gray";
+var penFp = { stroke: "none", fill: fillG }; // -Fp & -Fg
+var penFt = { stroke: "none", fill: fillE }; // -Ft & -Fe
+
+const area = 300; // width and height of an SVG
+var draw = SVG().addTo('#svg-area').size(area, area);
+var group = draw.group().transform({ tx: area / 2, ty: area / 2 }).flip("y");
+
+const DATA_FORMATS = {
+	a: { code: "a", argc: 3, legend: "strike dip rake [magnitude ...]" },
+	c: { code: "c", argc: 6, legend: "strike dip rake (of plane 1, 2) [mantissa exponent ...]" },
+	m: { code: "m", argc: 6, legend: "mrr mtt mff mrt mrf mtf [exponent ...]" },
+	p: { code: "p", argc: 4, legend: "strike1 dip1 strike2 \u00b11 [magnitude ...]" },
+	x: { code: "x", argc: 9, legend: "value azimuth plunge (of T, N, P axis) [exponent ...]" },
+};
+let selectedFormat = DATA_FORMATS["a"];
+
+/* Define events */
+const elementDataFormat = document.querySelector("#data-format");
+// const elementPlotMode = document.querySelector("#plot-mode");
+const elementParams = document.querySelector("#params");
+
+elementDataFormat.addEventListener("change", event => {
+	let fmt = DATA_FORMATS[event.target.value];
+	if (fmt == null) return;
+
+	selectedFormat = fmt;
+	document.querySelector("#legend").textContent = fmt.legend;
+});
+
+elementParams.addEventListener("change", event => {
+	let args = event.target.value.trim().split(/\s+/);
+	if (args.length < selectedFormat.argc) return;
+
+	let params = args.slice(0, selectedFormat.argc).map(s => Number(s));
+	let fm;
+	switch (selectedFormat.code) {
+		case "a":
+			fm = FocalMechanism.fromSa(...params);
+			break;
+		case "c":
+			fm = FocalMechanism.fromSc(...params);
+			break;
+		case "p":
+			fm = FocalMechanism.fromSp(...params);
+			break;
+		case "m":
+			fm = FocalMechanism.fromSm(...params);
+			break;
+		case "x":
+			fm = FocalMechanism.fromSx(...params);
+			break;
+		default:
+			return;
+	}
+
+	console.log(fm);
+
+	group.clear();
+	let b = new Beachball();
+	b.drawTensor(group, fm.axes, fillG, fillE, false);
+	b.drawPlane(group, fm.np.nv, penT);
+	b.drawPlane(group, fm.np.sv, penT);
+	b.drawOutline(group, penL);
+});
+	</script>
 </body>
 </html>
