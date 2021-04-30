@@ -1,7 +1,7 @@
 /**
  * Draw a focal mechanism.
  *
- * Copyright: 2021 Masahiro Nomoto
+ * Copyright (C) 2021 hmmnrst
  * This code is licensed under GNU LGPL.
  */
 

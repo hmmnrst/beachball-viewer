@@ -2,7 +2,7 @@
  * Manage a focal mechanism.
  * Interpret various data formats suppoted by GMT.
  *
- * Copyright: 2021 Masahiro Nomoto
+ * Copyright (C) 2021 hmmnrst
  * This code is licensed under GNU LGPL.
  */
 
