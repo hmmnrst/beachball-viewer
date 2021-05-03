@@ -1,41 +1,43 @@
 /**
- * Draw a focal mechanism.
+ * Draw focal mechanisms.
  *
  * Copyright (C) 2021 hmmnrst
  * This code is licensed under GNU LGPL.
  */
 
-const scale = 100; // radius of a beachball
-function round(x) { return Math.round(x * 100) / 100; }
-
-const N = 12; // number of points per 180 degrees
-
 class Beachball {
-	static xy(n, rz, rn, re) {
+	constructor(opts = {}) {
+		this.scale = opts.scale || 100; // radius of a beachball
+		this.nFine = opts.nFine || 180; // number of points per 180 degrees
+		this.round = opts.round || (x => x); // round-off function
+	}
+
+	xy(n, rz, rn, re) {
 		let arr = new Array(n * 2);
 		for (let i = 0; i < n; i++) {
 			let [x, y] = zne2proj(rz[i], rn[i], re[i]);
-			arr[i*2+0] = round(x * scale);
-			arr[i*2+1] = round(y * scale);
+			arr[i*2+0] = this.round(x * this.scale);
+			arr[i*2+1] = this.round(y * this.scale);
 		}
 		return arr;
 	}
 
 	drawCircle(canvas, x0, y0, radius) {
-		let left = (x0 - radius) * scale;
-		let top  = (y0 - radius) * scale;
-		return canvas.circle(radius * scale * 2).transform({ tx: left, ty: top });
+		let left = (x0 - radius) * this.scale;
+		let top  = (y0 - radius) * this.scale;
+		return canvas.circle(radius * this.scale * 2).transform({ tx: left, ty: top });
 	}
 
 	drawLine(canvas, n, rz, rn, re) {
-		return canvas.polyline(Beachball.xy(n, rz, rn, re));
+		return canvas.polyline(this.xy(n, rz, rn, re));
 	}
 
 	drawPolygon(canvas, n, rz, rn, re) {
-		return canvas.polygon(Beachball.xy(n, rz, rn, re));
+		return canvas.polygon(this.xy(n, rz, rn, re));
 	}
 
 	drawTensor(canvas, axes, fillComp, fillExt, plotZeroTrace = false) {
+		const N = this.nFine;
 		axes = Array.from(axes); // shallow copy
 		let v = Array.from(axes, x => x.value);
 
@@ -155,6 +157,7 @@ class Beachball {
 	}
 
 	drawPlane(canvas, normalVector, pen) {
+		const N = this.nFine;
 		let { z, n, e } = normalVector;
 		let h2 = n * n + e * e;
 		if (h2 == 0) return;

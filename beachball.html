@@ -111,6 +111,13 @@ const area = 300; // width and height of an SVG
 var draw = SVG().addTo('#svg-area').size(area, area);
 var group = draw.group().transform({ tx: area / 2, ty: area / 2 }).flip("y");
 
+const settings = {
+	scale: 100,
+	nFine: 12,
+	round: (x => Math.round(x * 100) / 100),
+};
+const b = new Beachball(settings);
+
 const DATA_FORMATS = {
 	a: { code: "a", argc: 3, legend: "strike dip rake [magnitude ...]" },
 	c: { code: "c", argc: 6, legend: "strike dip rake (of plane 1, 2) [mantissa exponent ...]" },
@@ -162,7 +169,6 @@ elementParams.addEventListener("change", event => {
 	console.log(fm);
 
 	group.clear();
-	let b = new Beachball();
 	b.drawTensor(group, fm.axes, fillG, fillE, false);
 	b.drawPlane(group, fm.np.nv, penT);
 	b.drawPlane(group, fm.np.sv, penT);
