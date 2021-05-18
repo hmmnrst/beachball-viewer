@@ -10,16 +10,18 @@
 	<script src="beachball.js"></script>
 	<style type="text/css">
 		body {
-			width: 25rem;
+			max-width: 25rem;
 			margin: 0 auto;
 		}
 		#svg-area {
-			text-align: center;
+			width: 75%;
+			margin: 0 auto;
 		}
 		table {
 			width: 100%;
 		}
 		select {
+			width: 100%;
 			font-size: medium;
 		}
 		input {
@@ -36,7 +38,7 @@
 		<table>
 			<tr>
 				<td>
-					<span>Data format:</span>
+					<span>Format:</span>
 				</td>
 				<td>
 					<select id="data-format" name="option-S1">
@@ -51,7 +53,7 @@
 <!--
 			<tr>
 				<td>
-					<span>Plotting mode:</span>
+					<span>Mode:</span>
 				</td>
 				<td>
 					<select id="plot-mode" name="option-S2">
@@ -64,18 +66,23 @@
 -->
 			<tr>
 				<td>
-					<span>Data:</span>
+					<span>Parameters:</span>
 				</td>
 				<td>
 					<input type="text" id="params">
-					<br>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
 					<span id="legend"></span>
 				</td>
 			</tr>
 		</table>
 	</div>
 
-	<h2>External links</h2>
+	<h3>External links</h3>
 	<ul>
 		<li>
 			<a href="https://www.generic-mapping-tools.org/" target="_blank" rel="noopener noreferrer">The Generic Mapping Tools</a>
@@ -107,9 +114,9 @@ var fillG = "gray";
 var penFp = { stroke: "none", fill: fillG }; // -Fp & -Fg
 var penFt = { stroke: "none", fill: fillE }; // -Ft & -Fe
 
-const area = 300; // width and height of an SVG
-var draw = SVG().addTo('#svg-area').size(area, area);
-var group = draw.group().transform({ tx: area / 2, ty: area / 2 }).flip("y");
+const size = 300; // width and height of an SVG
+var draw = SVG().addTo('#svg-area').viewbox(-size / 2, -size / 2, size, size);
+var group = draw.group().flip("y");
 
 const settings = {
 	scale: 100,
