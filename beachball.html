@@ -106,11 +106,11 @@
 
 	<script>
 // color settings
-var penW = { stroke: "red", fill: "none" };
+var penW = { stroke: "black", fill: "none" };
 var penL = penW;
-var penT = penW;
-var fillE = "lightyellow";
-var fillG = "gray";
+var penT = { stroke: "black", fill: "none", "stroke-dasharray": 5 };
+var fillE = "white";
+var fillG = "darkgray";
 var penFp = { stroke: "none", fill: fillG }; // -Fp & -Fg
 var penFt = { stroke: "none", fill: fillE }; // -Ft & -Fe
 
@@ -118,12 +118,7 @@ const size = 300; // width and height of an SVG
 var draw = SVG().addTo('#svg-area').viewbox(-size / 2, -size / 2, size, size);
 var group = draw.group().flip("y");
 
-const settings = {
-	scale: 100,
-	nFine: 12,
-	round: (x => Math.round(x * 100) / 100),
-};
-const b = new Beachball(settings);
+const b = new Beachball();
 
 const DATA_FORMATS = {
 	a: { code: "a", argc: 3, legend: "strike dip rake [magnitude ...]" },
@@ -175,10 +170,14 @@ elementParams.addEventListener("change", event => {
 
 	console.log(fm);
 
+	// 29 254 50 -1 100 37 -31 0 13
 	group.clear();
 	b.drawTensor(group, fm.axes, fillG, fillE, false);
-	b.drawPlane(group, fm.np.nv, penT);
-	b.drawPlane(group, fm.np.sv, penT);
+	// b.drawPlane(group, fm.np.nv, penT);
+	// b.drawPlane(group, fm.np.sv, penT);
+	b.drawPlane(group, fm.axes[0], penT);
+	b.drawPlane(group, fm.axes[1], penT);
+	b.drawPlane(group, fm.axes[2], penT);
 	b.drawOutline(group, penL);
 });
 	</script>

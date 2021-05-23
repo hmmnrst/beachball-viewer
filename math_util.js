@@ -25,6 +25,7 @@ function zne2proj(rz, rn, re) { // assume rz >= 0 (lower-hemisphere)
 	if (rh2 == 0) return [0, 0];
 
 	let r = Math.hypot(rz, rn, re);
-	let f = 1 / Math.sqrt(r * (r + rz));
+	// let f = 1 / Math.sqrt(r * (r + rz));
+	let f = 1 / r;
 	return [re * f, rn * f];
 }
