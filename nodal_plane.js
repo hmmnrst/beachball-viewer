@@ -1,5 +1,6 @@
 /**
- * Manage a nodal plane of a focal mechanism, i.e. a fault (and its slip direction).
+ * Manage one of the nodal planes of a focal mechanism,
+ * i.e. a fault (and its slip direction).
  *
  * This code is licensed under CC0.
  */
@@ -34,7 +35,7 @@ class NodalPlane {
 
 		if (norm > 0) {
 			sv = new Axis(z / norm, n / norm, e / norm);
-			if (sv.z * fault < 0) sv = sv.getOpposite();
+			if (sv.z * fault > 0) sv = sv.getOpposite();
 		} else {
 			console.warn("cannot determine NP2 (any dip is possible)");
 		}
