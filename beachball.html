@@ -50,20 +50,6 @@
 					</select>
 				</td>
 			</tr>
-<!--
-			<tr>
-				<td>
-					<span>Mode:</span>
-				</td>
-				<td>
-					<select id="plot-mode" name="option-S2">
-						<option value="m">-Sm|x: Full seismic moment tensor</option>
-						<option value="d">-Sd|y: The closest double couple</option>
-						<option value="z">-Sz|t: The deviatoric part</option>
-					</select>
-				</td>
-			</tr>
--->
 			<tr>
 				<td>
 					<span>Parameters:</span>
@@ -77,6 +63,13 @@
 				</td>
 				<td>
 					<span id="legend"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<button id="replot">Replot</button>
 				</td>
 			</tr>
 		</table>
@@ -180,11 +173,12 @@ function applyParameters(input) {
 
 /* Define events */
 const elementDataFormat = document.querySelector("#data-format");
-// const elementPlotMode = document.querySelector("#plot-mode");
 const elementParams = document.querySelector("#params");
+const elementReplot = document.querySelector("#replot");
 
 elementDataFormat.addEventListener("change", event => setDataFormat(event.target.value));
 elementParams.addEventListener("change", event => applyParameters(event.target.value));
+elementReplot.addEventListener("click", event => applyParameters(elementParams.value));
 	</script>
 </body>
 </html>
