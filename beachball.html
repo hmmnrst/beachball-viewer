@@ -132,23 +132,19 @@ const DATA_FORMATS = {
 	p: { code: "p", argc: 4, legend: "strike1 dip1 strike2 \u00b11 [magnitude ...]" },
 	x: { code: "x", argc: 9, legend: "value azimuth plunge (of T, N, P axis) [exponent ...]" },
 };
-let selectedFormat = DATA_FORMATS["a"];
+var selectedFormat;
+setDataFormat("a");
 
-/* Define events */
-const elementDataFormat = document.querySelector("#data-format");
-// const elementPlotMode = document.querySelector("#plot-mode");
-const elementParams = document.querySelector("#params");
-
-elementDataFormat.addEventListener("change", event => {
-	let fmt = DATA_FORMATS[event.target.value];
+function setDataFormat(value) {
+	let fmt = DATA_FORMATS[value];
 	if (fmt == null) return;
 
 	selectedFormat = fmt;
 	document.querySelector("#legend").textContent = fmt.legend;
-});
+}
 
-elementParams.addEventListener("change", event => {
-	let args = event.target.value.trim().split(/\s+/);
+function applyParameters(input) {
+	let args = input.trim().split(/\s+/);
 	if (args.length < selectedFormat.argc) return;
 
 	let params = args.slice(0, selectedFormat.argc).map(s => Number(s));
@@ -180,7 +176,15 @@ elementParams.addEventListener("change", event => {
 	b.drawPlane(group, fm.np.nv, penT);
 	b.drawPlane(group, fm.np.sv, penT);
 	b.drawOutline(group, penL);
-});
+}
+
+/* Define events */
+const elementDataFormat = document.querySelector("#data-format");
+// const elementPlotMode = document.querySelector("#plot-mode");
+const elementParams = document.querySelector("#params");
+
+elementDataFormat.addEventListener("change", event => setDataFormat(event.target.value));
+elementParams.addEventListener("change", event => applyParameters(event.target.value));
 	</script>
 </body>
 </html>
