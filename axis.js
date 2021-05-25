@@ -1,6 +1,6 @@
 /**
  * Manage a principal axis (or any vector).
- * The `value` can represent a principal stress. (optional)
+ * Optionally, `value` can represent a principal value.
  *
  * This code is licensed under CC0.
  */
