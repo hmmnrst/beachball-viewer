@@ -110,6 +110,7 @@ var penFt = { stroke: "none", fill: fillE }; // -Ft & -Fe
 const size = 300; // width and height of an SVG
 var draw = SVG().addTo('#svg-area').viewbox(-size / 2, -size / 2, size, size);
 var group = draw.group().flip("y");
+group.circle(100 * 2).transform({ tx: -100, ty: -100 }).attr({ stroke: "black", fill: "none" }); // placeholder
 
 const settings = {
 	scale: 100,
